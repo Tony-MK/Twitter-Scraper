@@ -12,14 +12,21 @@ Open CMD and run the follwing commands ...
 ## Usage
 ```python
 
+from selenium import webdriver
+#Choose a browser eg.Chrome, FireFox,Safari
+browser = webdriver.Chrome()
 
-from TwitterExtractor import Extractor
-ex = Extractor.TweetExtractor(verbose=False)
+from TwitterExtractor import Tweets
+# Create a Tweet Extractor 
+ex = Tweets(browser=browser,verbose=False)
+
+#List Names of users to collect data
 names = ["bitcoin","billgates","elonmusk"]
 
-attributes = {"user_id":"","tweet_data":"","likes":""}
+#Attributes to return 
+attributes = {"user_id","tweet_data":""}
 
-# attributes is by default ATTRIBUTES, if not passed it returns all attributes
+# attributes is by default None, if not passed it returns all attributes
 tweets = ex.extract(names=names,nTweets=2,attributes=attributes)
 
 for tweet in tweets:
@@ -28,37 +35,36 @@ for tweet in tweets:
   print(tweet["tweet_data"].["text"])# prints cleaned version of the tweet
   print(tweet["tweet_data"].["likes"])# prints number of likes
   print(tweet["tweet_data"].["hashtags"])# prints hashtags
-  
+
+ex.close()
 ```
 ## Attributes
 
 ```python
 
-TWEET_DATA = {
-        "tweet":None,
-        "text":None,
-        "hashtags":None,
-        "mentioned_users":None,
-        "links":None,
-        "pic_links":None
-}
-TWEET_INFO = {
-        "tweet_type":None,
-        "retweeted_by":None
+TWEET = {
+    "tweet":None,
+    "text":None,
+    "hashtags":None,
+    "mentioned_users":None,
+    "links":None,
+    "pic_links":None
 }
 ATTRIBUTES = {
+        "tweet_id":None,
         "user_id": None,
         "user_name":None,
         "posted": None,
-        "tweet_id":None,
-        "tweet_data":None,
-        "tweet_info":None,
+        "tweet":TWEET,
+
+        "tweet_type":None,
+        "retweeted_by":None,
+
         "replies":None,
         "likes":None,
         "retweets":None
-            
 }
 
 ```
 
-## NOTE: Still in development
+## NOTE: Still in Beta
