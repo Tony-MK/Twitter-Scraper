@@ -17,7 +17,7 @@ from TwitterExtractor import Extractor
 ex = Extractor.TweetExtractor(verbose=False)
 names = ["bitcoin","billgates","elonmusk"]
 
-attributes = {"user_id:"","tweet_data":"",likes:""}
+attributes = {"user_id":"","tweet_data":"","likes":""}
 
 # attributes is by default ATTRIBUTES, if not passed it returns all attributes
 tweets = ex.extract(names=names,nTweets=2,attributes=attributes)
