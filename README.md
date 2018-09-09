@@ -3,12 +3,14 @@
 A simple webscarper which collects a user's twitter history.
 
 ## Installing
+
 Open CMD or Termial and run the follwing commands ...
 
 `git clone https://github.com/Tony-MK/TwitterExtractor`
+
 `cd ./TwitterExtractor`
-`pip install .` Installs for current user
-`pip install -e .` Installs for all users
+
+`pip install .` Installs for current user /`pip install -e .` Installs for all users
 
 ## Running
 
@@ -98,10 +100,10 @@ TWEET = {
 
 ```
 ## Dependencies
-`
-requests==2.19.1
-beautifulsoup4==4.6.3
-`
+
+`requests==2.19.1`
+`beautifulsoup4==4.6.3`
 
 ## NOTE: Still in Beta
+
 Please feel to raise an issue if your find a bug.
