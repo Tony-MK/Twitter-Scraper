@@ -1,25 +1,7 @@
-# TwitterExtractor
-
-A simple webscarper which collects a user's twitter history.
-
-## Installing
-Open CMD or Termial and run the follwing commands ...
-
-`git clone https://github.com/Tony-MK/TwitterExtractor`
-`cd ./TwitterExtractor`
-`pip install .` Installs for current user
-`pip install -e .` Installs for all users
-
-## Running
-
-`python Example.py` Runs the code below 
-
-## Example
-```python
 from TwitterExtractor import Tweets
 from selenium import webdriver
 
-# Open a web browser eg.Chrome, FireFox,Safari
+# Choose a browser eg.Chrome, FireFox,Safari
 browser = webdriver.Chrome()
 
 # Create a Tweet Extractor 
@@ -54,54 +36,3 @@ for user in tweets:
 
 # Closes the browser window
 EX.done()
-```
-## Vaild Attributes
-
-```python
-# Vaild Attributes as arguments
-[ 
-  "tweet_id",
-  "user_id" ,
-  "user_name",
-  "posted",
-  "tweet", # same as a dict TWEET
-  "tweet_type",
-  "retweeted_by",
-  "replies",
-  "likes",
-  "retweets"
-]
-
-# Possible Attributes to return
-ATTRIBUTES = {
-        "tweet_id":None,
-        "user_id": None,
-        "user_name":None,
-        "posted": None,
-        "tweet":TWEET,
-        "tweet_type":None,
-        "retweeted_by":None,
-        "replies":None,
-        "likes":None,
-        "retweets":None
-}
-
-
-TWEET = {
-    "tweet":None,
-    "text":None,
-    "hashtags":[],
-    "mentioned_users":[],
-    "links":[],
-    "pic_links":[]
-}
-
-```
-## Dependencies
-`
-requests==2.19.1
-beautifulsoup4==4.6.3
-`
-
-## NOTE: Still in Beta
-Please feel to raise an issue if your find a bug.

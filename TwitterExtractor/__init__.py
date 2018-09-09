@@ -45,11 +45,11 @@ class TweetCleaner:
         attrs = {}
         for a in attributes:
             attrs[a] = getattr(self, a,"Invalid Attribute")()
-        return attributes
-    def user_id(self):return self.header.find("a",class_="account-group")["data-user-id"]
+        return attrs
+    def user_id(self):return int(self.header.find("a",class_="account-group")["data-user-id"])
     def user_name(self):return self.header.find("a",class_="account-group").find("strong", class_="fullname").text
-    def posted(self):return self.header.find("span", class_="_timestamp")["data-time"]
-    def tweet_id(self):return self.T["data-item-id"]
+    def posted(self):return int(self.header.find("span", class_="_timestamp")["data-time"])
+    def tweet_id(self):return int(self.T["data-item-id"])
     def likes(self):return int(self.content.select("span[data-tweet-stat-count]")[2]["data-tweet-stat-count"])
     def replies(self):return int(self.content.select("span[data-tweet-stat-count]")[0]["data-tweet-stat-count"])
     def retweets(self):return int(self.content.select("span[data-tweet-stat-count]")[1]["data-tweet-stat-count"])
@@ -89,37 +89,42 @@ class Tweets:
         pass
     
     def checkName(self,name):
-        resp = requests.get(Base+name)
-        if resp.status_code  == 200:
-            return True
-        elif resp.status_code  == 404:
-            return False
-        else:
-            raise(resp.status_code)
+        try:
+            resp = requests.get(Base+name)
+            if resp.status_code  == 200:
+                return True
+            elif resp.status_code  == 404:
+                return False
+        except Exception as e:
+            raise(e)
 
-    def extract(self,names,nTweets=20000,attributes=None):
-        if attributes is None: attributes = ATTR
-        Data = []
+    def extract(self,names,nTweets=2000,attributes=None):
+        if attributes is None:
+            attributes = ATTR
+        else:
+            for a in attributes:
+                if not (a in ATTR):
+                    raise(ValueError(a+" is an Invalid Attribute")) 
+        Data = {}
         for name in names:
             if self.checkName(name):
-                pos = int(0)
-                if self.verbose:print("Collecting %s's twitter feed ..."%(name))
+                Data[name] = []
+                N,pos= nTweets,0
                 self.browser.get(Base+name)
-                while(nTweets > 0):
-                    self.scroll()
-                    time.sleep(2)
+                while(N > 0):
                     if pos < len(self.browser.page_source):
                         soup = BeautifulSoup(self.browser.page_source[pos:],"html5lib")
                         tweets = soup.find_all("li",{"class":"js-stream-item"})
                         for i in range(min(len(tweets),nTweets)):
-                            nTweets -= 1
-                            Data.append(TweetCleaner(tweets[i]).clean_all(attributes))
+                            N -= 1
+                            Data[name].append(TweetCleaner(tweets[i]).clean_all(attributes))
                         pos = len(self.browser.page_source)
+                        self.scroll()
                     else:
-                        if self.verbose:print("Finished collecting : %d %s Tweets"%(n,name))
                         break
             else:
-                raise(ValueError(name+" does not Exist"))
+                print(ValueError(name+" does not Exist"))
+
         return Data
 
     def scroll(self):
