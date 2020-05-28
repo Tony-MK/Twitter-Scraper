@@ -1,4 +1,4 @@
-# TwitterExtractor
+# Twitter Scraper
 
 A simple webscarper which collects a user's twitter history.
 
@@ -6,11 +6,11 @@ A simple webscarper which collects a user's twitter history.
 
 Open CMD or Termial and run the follwing commands ...
 
-`git clone https://github.com/Tony-MK/TwitterExtractor`
+`git clone https://github.com/Tony-MK/Twitter-Scraper`
 
-`cd ./TwitterExtractor`
+`cd Twitter-Scraper`
 
-`pip install .` Installs for current user /`pip install -e .` Installs for all users
+`pip install .` to install for single user / `pip install -e .` to install for all users.
 
 ## Running
 
@@ -105,5 +105,3 @@ TWEET = {
 `beautifulsoup4==4.6.3`
 
 ## NOTE: Still in Beta
-
-Please feel to raise an issue if your find a bug.
